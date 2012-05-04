@@ -1,8 +1,8 @@
-# Blackberry Port of zxing (Zebra Crossing) 
+# Blackberry Port of ZXing 2.0 (Zebra Crossing) 
  
-Officially sanctioned port of zxing to the Blackberry/QNX platform. To avoid fragmentation, please do not use any other version of zxing.  Furthermore, do not expose any zxing constructs in public APIs.
+Officially sanctioned port of ZXing to the Blackberry/QNX platform.
 
-Please direct all inquiries about zxing to Eduardo Pelegri-Llopart (epelegrillopart@rim.com).
+Please direct all inquiries about ZXing to Eduardo Pelegri-Llopart (epelegrillopart@rim.com).
 
 ### Prerequisites
 
