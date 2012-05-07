@@ -24,6 +24,15 @@
 
 using namespace std;
 
+
+#ifdef _MSC_VER
+static const float fNAN = std::numeric_limits<float>::quiet_NaN();
+#define NAN fNAN
+static const float fINF = std::numeric_limits<float>::infinity();
+#define INFINITY fINF
+#define isnan _isnan
+#endif
+
 namespace zxing {
 namespace EdgeDetector {
 

@@ -19,12 +19,19 @@
  * limitations under the License.
  */
 
-#include "AlignmentPatternFinder.h"
+#include <zxing/qrcode/detector/AlignmentPatternFinder.h>
+
 #include <zxing/ReaderException.h>
 #include <zxing/common/BitArray.h>
 #include <vector>
 #include <cmath>
 #include <cstdlib>
+
+#ifdef _MSC_VER
+static const float fNAN = std::numeric_limits<float>::quiet_NaN();
+#define NAN fNAN
+#define isnan _isnan
+#endif
 
 namespace zxing {
 namespace qrcode {

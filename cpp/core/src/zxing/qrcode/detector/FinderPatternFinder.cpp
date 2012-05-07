@@ -27,6 +27,12 @@
 #include <cstdlib>
 #include <algorithm>
 
+#ifdef _MSC_VER
+static const float fNAN = std::numeric_limits<float>::quiet_NaN();
+#define NAN fNAN
+#define isnan _isnan
+#endif
+
 namespace zxing {
 namespace qrcode {
 
