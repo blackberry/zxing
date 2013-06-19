@@ -174,9 +174,7 @@ final class DecodedBitStreamParser {
         // Ignore this symbol for now
       } else if (oneByte >= 242) {  // Not to be used in ASCII encodation
         // ... but work around encoders that end with 254, latch back to ASCII
-        if (oneByte == 254 && bits.available() == 0) {
-          // Ignore
-        } else {
+        if (oneByte != 254 || bits.available() != 0) {
           throw FormatException.getFormatInstance();
         }
       }
@@ -415,7 +413,6 @@ final class DecodedBitStreamParser {
    * See ISO 16022:2006, 5.2.8 and Annex C Table C.3
    */
   private static void decodeEdifactSegment(BitSource bits, StringBuilder result) {
-    boolean unlatch = false;
     do {
       // If there is only two or less bytes left then it will be encoded as ASCII
       if (bits.available() <= 16) {
@@ -427,19 +424,20 @@ final class DecodedBitStreamParser {
 
         // Check for the unlatch character
         if (edifactValue == 0x1F) {  // 011111
-          unlatch = true;
-          // If we encounter the unlatch code then continue reading because the Codeword triple
-          // is padded with 0's
+          // Read rest of byte, which should be 0, and stop
+          int bitsLeft = 8 - bits.getBitOffset();
+          if (bitsLeft != 8) {
+            bits.readBits(bitsLeft);
+          }
+          return;
         }
 
-        if (!unlatch) {
-          if ((edifactValue & 0x20) == 0) {  // no 1 in the leading (6th) bit
-            edifactValue |= 0x40;  // Add a leading 01 to the 6 bit binary value
-          }
-          result.append((char) edifactValue);
+        if ((edifactValue & 0x20) == 0) {  // no 1 in the leading (6th) bit
+          edifactValue |= 0x40;  // Add a leading 01 to the 6 bit binary value
         }
+        result.append((char) edifactValue);
       }
-    } while (!unlatch && bits.available() > 0);
+    } while (bits.available() > 0);
   }
 
   /**

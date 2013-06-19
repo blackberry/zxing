@@ -36,7 +36,7 @@ public final class BizcardResultParser extends AbstractDoCoMoResultParser {
 
   @Override
   public AddressBookParsedResult parse(Result result) {
-    String rawText = result.getText();
+    String rawText = getMassagedText(result);
     if (!rawText.startsWith("BIZCARD:")) {
       return null;
     }
@@ -53,6 +53,7 @@ public final class BizcardResultParser extends AbstractDoCoMoResultParser {
 
     return new AddressBookParsedResult(maybeWrap(fullName),
                                        null,
+                                       null,
                                        buildPhoneNumbers(phoneNumber1, phoneNumber2, phoneNumber3),
                                        null,
                                        maybeWrap(email),
@@ -64,6 +65,7 @@ public final class BizcardResultParser extends AbstractDoCoMoResultParser {
                                        org,
                                        null,
                                        title,
+                                       null,
                                        null);
   }
 

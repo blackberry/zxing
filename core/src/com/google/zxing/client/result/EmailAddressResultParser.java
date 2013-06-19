@@ -30,7 +30,7 @@ public final class EmailAddressResultParser extends ResultParser {
 
   @Override
   public EmailAddressParsedResult parse(Result result) {
-    String rawText = result.getText();
+    String rawText = getMassagedText(result);
     String emailAddress;
     if (rawText.startsWith("mailto:") || rawText.startsWith("MAILTO:")) {
       // If it starts with mailto:, assume it is definitely trying to be an email address
@@ -39,6 +39,7 @@ public final class EmailAddressResultParser extends ResultParser {
       if (queryStart >= 0) {
         emailAddress = emailAddress.substring(0, queryStart);
       }
+      emailAddress = urlDecode(emailAddress);
       Map<String,String> nameValues = parseNameValuePairs(rawText);
       String subject = null;
       String body = null;
