@@ -1,4 +1,4 @@
-# Blackberry Port of ZXing 2.0 (Zebra Crossing) 
+# Blackberry Port of ZXing 2.2 (Zebra Crossing)
  
 Officially sanctioned port of ZXing to the Blackberry/QNX platform.
 
